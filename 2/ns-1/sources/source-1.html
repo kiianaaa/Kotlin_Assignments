@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > FractionMutable</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">&lt;empty package name&gt;</a>
+</div>
+
+<h1>Coverage Summary for Class: FractionMutable (&lt;empty package name&gt;)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FractionMutable</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (9/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.5%
+  </span>
+  <span class="absValue">
+    (10/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    82.1%
+  </span>
+  <span class="absValue">
+    (32/39)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;import kotlin.math.absoluteValue
+&nbsp;
+<b class="fc">&nbsp;class FractionMutable(numerator: Int, denominator: Int, sign: Int = 1) {</b>
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    private var numerator: Int = numerator.absoluteValue</b>
+<b class="fc">&nbsp;    private var denominator: Int = denominator.absoluteValue</b>
+&nbsp;
+&nbsp;
+<b class="pc">&nbsp;    private var sign: Int = if (numerator * denominator &lt; 0) -sign else sign</b>
+&nbsp;
+<b class="fc">&nbsp;    init {</b>
+<b class="pc">&nbsp;        if (denominator == 0) {</b>
+<b class="nc">&nbsp;            throw IllegalArgumentException(&quot;Denominator cannot be zero&quot;)</b>
+&nbsp;        }
+<b class="fc">&nbsp;        simplify()  // Simplify the fraction after initialization</b>
+<b class="fc">&nbsp;    }</b>
+&nbsp;
+&nbsp;    // GCD calculation to simplify fractions
+&nbsp;    private fun gcd(a: Int, b: Int): Int {
+<b class="fc">&nbsp;        return if (b == 0) a else gcd(b, a % b)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // Simplify the fraction by dividing by the GCD
+&nbsp;    private fun simplify() {
+<b class="fc">&nbsp;        val gcdValue = gcd(numerator, denominator)</b>
+<b class="fc">&nbsp;        numerator /= gcdValue</b>
+<b class="fc">&nbsp;        denominator /= gcdValue</b>
+&nbsp;
+<b class="pc">&nbsp;        if (numerator &lt; 0) {</b>
+<b class="nc">&nbsp;            sign *= -1</b>
+<b class="nc">&nbsp;            numerator = numerator.absoluteValue</b>
+&nbsp;        }
+&nbsp;
+<b class="pc">&nbsp;        if (denominator &lt; 0) {</b>
+<b class="nc">&nbsp;            sign *= -1</b>
+<b class="nc">&nbsp;            denominator = denominator.absoluteValue</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun toString(): String {
+<b class="fc">&nbsp;        return &quot;${if (sign == -1) &quot;-&quot; else &quot;&quot;}$numerator/$denominator&quot;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun toDecimal(): Double {
+<b class="nc">&nbsp;        return sign * numerator.toDouble() / denominator.toDouble()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun negate() {
+<b class="fc">&nbsp;        sign *= -1</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun add(other: FractionMutable) {
+<b class="fc">&nbsp;        val commonDenominator = denominator * other.denominator</b>
+<b class="fc">&nbsp;        val newNumerator = sign * numerator * other.denominator + other.sign * other.numerator * denominator</b>
+&nbsp;
+<b class="fc">&nbsp;        numerator = newNumerator.absoluteValue</b>
+<b class="fc">&nbsp;        denominator = commonDenominator</b>
+<b class="pc">&nbsp;        sign = if (newNumerator &gt;= 0) 1 else -1</b>
+&nbsp;
+<b class="fc">&nbsp;        simplify()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun mult(other: FractionMutable) {
+<b class="fc">&nbsp;        numerator *= other.numerator</b>
+<b class="fc">&nbsp;        denominator *= other.denominator</b>
+<b class="fc">&nbsp;        sign *= other.sign</b>
+<b class="fc">&nbsp;        simplify()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun div(other: FractionMutable) {
+<b class="pc">&nbsp;        if (other.numerator == 0) {</b>
+<b class="nc">&nbsp;            throw IllegalArgumentException(&quot;Cannot divide by zero&quot;)</b>
+&nbsp;        }
+<b class="fc">&nbsp;        numerator *= other.denominator</b>
+<b class="fc">&nbsp;        denominator *= other.numerator</b>
+<b class="fc">&nbsp;        sign *= other.sign</b>
+<b class="fc">&nbsp;        simplify()</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    fun intPart(): Int {
+<b class="fc">&nbsp;        return (numerator * sign) / denominator</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-08-27 13:06</div>
+</div>
+</body>
+</html>
