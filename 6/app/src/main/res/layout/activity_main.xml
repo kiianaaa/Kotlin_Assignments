@@ -8,58 +8,50 @@
     tools:context=".MainActivity">
 
     <!-- ImageView for MP's placeholder picture -->
-
-    <!-- TextView for MP's Name -->
-
     <ImageView
         android:id="@+id/mp_image"
-        android:layout_width="160dp"
+        android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:contentDescription="MP Image"
+        android:layout_marginTop="32dp"
         android:src="@drawable/placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.885"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="MP Image" />
 
+    <!-- TextView for MP's Name -->
     <TextView
         android:id="@+id/mp_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="18dp"
         android:text="MP Name"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/mp_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mp_image" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- TextView for MP's Constituency -->
     <TextView
         android:id="@+id/mp_constituency"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
         android:text="Constituency"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/mp_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mp_name" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Button for showing next random MP -->
     <Button
         android:id="@+id/next_mp_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
         android:text="Next MP"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/mp_constituency"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mp_constituency" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
